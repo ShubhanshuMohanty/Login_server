@@ -1,6 +1,7 @@
 import { User } from "../models/user.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { sendToken } from "../utils/featuers.js";
 import { TryCatch } from "../utils/TryCatchHandler.js";
 import { ErrorHandler } from "../utils/utility.js";
 
@@ -13,7 +14,7 @@ const createUser = TryCatch(async (req, res, next) => {
     "base64"
   )}`;
   // console.log("filePath: ", filePath);
-  const avatar = await uploadOnCloudinary(filePath);
+//   const avatar = await uploadOnCloudinary(filePath);
   //   console.log("avatar: ", avatar);
 
   const user = await User.create({
@@ -21,11 +22,12 @@ const createUser = TryCatch(async (req, res, next) => {
     email,
     bio,
     password,
-    avatar: avatar.secure_url,
+    // avatar: avatar.secure_url,
   });
-  return res
+  sendToken(res,user,201,"user created successfully")
+  /*return res
     .status(201)
-    .json(new ApiResponse(201, name, "user created successfully"));
+    .json(new ApiResponse(201, name, "user created successfully"));*/
 });
 
 const login = () => {};
