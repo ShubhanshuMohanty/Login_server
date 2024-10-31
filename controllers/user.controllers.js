@@ -1,3 +1,4 @@
+import { compare } from "bcrypt";
 import { User } from "../models/user.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
@@ -30,5 +31,16 @@ const createUser = TryCatch(async (req, res, next) => {
     .json(new ApiResponse(201, name, "user created successfully"));*/
 });
 
-const login = () => {};
+const login = TryCatch(async(req,res,next)=>{
+    const {email,password}=req.body;
+    const user=await User.findOne({email});
+    
+    if(!user) return next(new ErrorHandler("Email not found",404))
+
+    const isMatch=await compare(password,user.password);
+    
+    if(!isMatch) return next(new ErrorHandler("Incorrect password",404))
+        
+    sendToken(res,user,200,"Logged in successfully")
+})
 export { createUser, login };

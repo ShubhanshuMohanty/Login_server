@@ -6,4 +6,6 @@ const app = express.Router();
 
 app.post('/createuser',singleAvatar,createUser);
 
+app.post('/login', login);
+
 export default app;
