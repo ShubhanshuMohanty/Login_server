@@ -17,4 +17,4 @@ const sendToken = (res, user, code, message) => {
     .json(new ApiResponse(code, user, message));
 };
 
-export { sendToken,cookieOptions };
+export { sendToken, cookieOptions };

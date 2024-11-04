@@ -15,7 +15,7 @@ const createUser = TryCatch(async (req, res, next) => {
     "base64"
   )}`;
   // console.log("filePath: ", filePath);
-  //   const avatar = await uploadOnCloudinary(filePath);
+    const avatar = await uploadOnCloudinary(filePath);
   //   console.log("avatar: ", avatar);
 
   const user = await User.create({
@@ -23,7 +23,7 @@ const createUser = TryCatch(async (req, res, next) => {
     email,
     bio,
     password,
-    // avatar: avatar.secure_url,
+    avatar: avatar.secure_url,
   });
   sendToken(res, user, 201, "user created successfully");
   /*return res
